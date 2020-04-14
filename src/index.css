@@ -1,9 +1,18 @@
 html {
-  background-color: #118C76;
-  color: #011F26;
+  background-color: #0B1F26;
+
 }
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+}
+
+h1 {
+  color: #469CA6;
+}
+
+p {
+  color: #ACF2F2;
+
 }

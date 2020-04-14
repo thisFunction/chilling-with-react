@@ -1,0 +1,8 @@
+.UserOutput p {
+    margin: 16px;
+    padding: 6px;
+    font-size: 16px;
+    background-color:#469CA6;
+    color: white; 
+    border: none;
+}
