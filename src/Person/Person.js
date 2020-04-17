@@ -2,7 +2,6 @@ import React from 'react';
 import './Person.css'
 
 const person = (props) => {
-    console.log(props);
     return (
         <div className="Person">
             <h1>Hi, I'm {props.name}.</h1>
