@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
+import ValidationComponent from './ValidationComponent/ValidationComponent'
+import CharComponent from './CharComponent/CharComponent';
 
 class App extends Component {
   state = { 
@@ -9,7 +11,8 @@ class App extends Component {
       { id:'2', name: 'Bob', age: 26 }, 
       { id:'3', name: 'Nicky', age: 30 }
     ],
-    showPersons: false
+    showPersons: false,
+    inputValue: "",
   };
 
   deletePersonHandler = personId => {
@@ -45,6 +48,17 @@ class App extends Component {
     this.setState({showPersons : !doesShow});
   }
 
+  changeInputValue = (event) => {
+    this.setState({inputValue : event.target.value}); 
+  }
+
+  removeCharAtIndex = (index) => {
+    const chars = [...this.state.inputValue];
+    chars.splice(index, 1);
+
+    this.setState({ inputValue: chars.join('') });
+  }
+
   render() {
     const style = {
       backgroundColor: "white",
@@ -75,6 +89,22 @@ class App extends Component {
       )
     }
 
+    let chars;
+    
+    if (this.state.inputValue.length) {
+      chars = (
+        [...this.state.inputValue].map((char, index) => {
+          return (
+            <CharComponent
+              key={index}
+              char={char}
+              click={() => this.removeCharAtIndex(index)}
+            />
+          )
+        })
+      )
+    }
+
     return (
       <div className="App">
         <button 
@@ -84,7 +114,15 @@ class App extends Component {
         </button>
 
         {persons}
+        <hr/>
 
+        <input type="text" value={this.state.inputValue} onChange={(event) => this.changeInputValue(event)} />
+
+        <p>Input length is {this.state.inputValue.length}</p>
+
+        <ValidationComponent inputLength={this.state.inputValue.length} />
+        
+        {chars}
       </div>
     );
   };
