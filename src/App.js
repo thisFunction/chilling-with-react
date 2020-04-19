@@ -1,8 +1,22 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
-import ValidationComponent from './ValidationComponent/ValidationComponent'
-import CharComponent from './CharComponent/CharComponent';
+import styled from 'styled-components';
+
+const StyledButton = styled.button`
+  background-color: ${props => props.alt ? 'indianRed' : 'lightGreen'};
+  font: inherit;
+  border: 1px solid blue;
+  padding: 8px;
+  cursor: pointer;
+  margin: 16px;
+  color: white;
+  
+  &:hover {
+    background-color: ${props => props.alt ? 'salmon' : 'green'};
+    color: white;
+  }
+`;
 
 class App extends Component {
   state = { 
@@ -12,7 +26,6 @@ class App extends Component {
       { id:'3', name: 'Nicky', age: 30 }
     ],
     showPersons: false,
-    inputValue: "",
   };
 
   deletePersonHandler = personId => {
@@ -48,27 +61,7 @@ class App extends Component {
     this.setState({showPersons : !doesShow});
   }
 
-  changeInputValue = (event) => {
-    this.setState({inputValue : event.target.value}); 
-  }
-
-  removeCharAtIndex = (index) => {
-    const chars = [...this.state.inputValue];
-    chars.splice(index, 1);
-
-    this.setState({ inputValue: chars.join('') });
-  }
-
   render() {
-    const style = {
-      backgroundColor: "white",
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer',
-      margin: '16px'
-    }
-
     let persons = null;
 
     if (this.state.showPersons) {
@@ -89,41 +82,26 @@ class App extends Component {
       )
     }
 
-    let chars;
-    
-    if (this.state.inputValue.length) {
-      chars = (
-        [...this.state.inputValue].map((char, index) => {
-          return (
-            <CharComponent
-              key={index}
-              char={char}
-              click={() => this.removeCharAtIndex(index)}
-            />
-          )
-        })
-      )
+    let classes = [];
+    if (this.state.persons.length <=2) {
+      classes.push('red');
+    }
+
+    if (this.state.persons.length <=1) {
+      classes.push('thin');
     }
 
     return (
-      <div className="App">
-        <button 
-        style={style}
-        onClick={this.togglePersonsHandler}>
-          Toggle Persons
-        </button>
-
-        {persons}
-        <hr/>
-
-        <input type="text" value={this.state.inputValue} onChange={(event) => this.changeInputValue(event)} />
-
-        <p>Input length is {this.state.inputValue.length}</p>
-
-        <ValidationComponent inputLength={this.state.inputValue.length} />
-        
-        {chars}
-      </div>
+        <div className="App">
+          <h1 className={classes.join(' ')}>Hi! I'm a React App</h1>
+          <StyledButton
+            alt={this.state.showPersons ? 0 : 1}
+            onClick={this.togglePersonsHandler}
+          >
+            Toggle Persons
+          </StyledButton>
+          {persons}
+        </div>
     );
   };
 }
