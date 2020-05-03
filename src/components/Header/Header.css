@@ -1,0 +1,30 @@
+.red {
+    color: indianred;
+}
+  
+.thin { 
+    font-weight: 100;
+}
+
+.Header button {
+    background-color: lightseagreen;
+    font: inherit;
+    border: 1px solid burlywood;
+    padding: 8px;
+    cursor: pointer;
+    margin: 16px;
+    color: white;
+}
+
+.Header button:hover {
+    background-color: lightgreen;
+    color: white;
+}
+
+.Header button.Red {
+    background-color: indianred;
+}
+
+.Header button.Red:hover {
+    background-color: salmon;
+}
