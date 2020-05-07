@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import classes from './Header.css'
+import AuthContext from '../../context/auth-context';
 
 const header = (props) => {
     const toggleButtonRef = useRef(null);
@@ -34,15 +35,18 @@ const header = (props) => {
 
     return (
         <div className={classes.Header}>
-            <h1 className={assignedClasses.join(' ')}>{props.title}</h1>
-            <button
-              ref={toggleButtonRef}
-              className={buttonClass.join(' ')}
-              alt={props.showPersons ? 0 : 1}
-              onClick={props.clicked}
-            >
-              Toggle Persons
-            </button>
+          <h1 className={assignedClasses.join(' ')}>{props.title}</h1>
+          <button
+            ref={toggleButtonRef}
+            className={buttonClass.join(' ')}
+            alt={props.showPersons ? 0 : 1}
+            onClick={props.clicked}
+          >
+            Toggle Persons
+          </button>
+          <AuthContext.Consumer>
+            {(context) => <button onClick={context.login}>{context.authenticated ? "Log out" : "Log in"}</button>}
+          </AuthContext.Consumer>
         </div>
     )
 }

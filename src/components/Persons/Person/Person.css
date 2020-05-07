@@ -7,6 +7,12 @@
     text-align: center;
 }
 
+.Person input {
+    max-width: 90%;
+    font-size: 1.1em;
+    padding: .2em;
+}
+
 @media (min-width: 500px) {
     .Person {
         margin-bottom: 10px;

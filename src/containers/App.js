@@ -4,6 +4,7 @@ import Persons from '../components/Persons/Persons';
 import Header from '../components/Header/Header';
 import withClass from '../hoc/withClass';
 import Aux from '../hoc/Auxillary';
+import AuthContext from '../context/auth-context';
 
 class App extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class App extends Component {
     showPersons: false,
     showHeader: true,
     changeCounter: 0,
+    isAuthenticated: false,
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -78,6 +80,11 @@ class App extends Component {
     this.setState({showPersons : !doesShow});
   }
 
+  loginHandler = () => {
+    const isAuth = this.state.isAuthenticated;
+    this.setState({isAuthenticated: !isAuth});
+  }
+
   render() {
     console.log('[App.js] render');
     
@@ -96,14 +103,21 @@ class App extends Component {
     return (
         <Aux>
           <button onClick={() => {this.setState({showHeader: false})}}>Turn off Header</button>
-          { this.state.showHeader ? 
-            <Header 
-              title={this.props.appTitle}
-              showPersons={this.state.showPersons}
-              personsLength={this.state.persons.length}
-              clicked={this.togglePersonsHandler}
-            /> : null }
-          {persons}
+          <AuthContext.Provider 
+            value={{ 
+              authenticated: this.state.isAuthenticated, 
+              login: this.loginHandler
+            }}
+          >
+            { this.state.showHeader ? 
+              <Header 
+                title={this.props.appTitle}
+                showPersons={this.state.showPersons}
+                personsLength={this.state.persons.length}
+                clicked={this.togglePersonsHandler}
+              /> : null }
+            {persons}
+          </AuthContext.Provider>
         </Aux>
     );
   };
