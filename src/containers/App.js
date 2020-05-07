@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import classes from './App.css';
 import Persons from '../components/Persons/Persons';
 import Header from '../components/Header/Header';
+import withClass from '../hoc/withClass';
+import Aux from '../hoc/Auxillary';
 
 class App extends Component {
   constructor(props) {
@@ -17,6 +19,7 @@ class App extends Component {
     ],
     showPersons: false,
     showHeader: true,
+    changeCounter: 0,
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -62,7 +65,12 @@ class App extends Component {
 
     persons[personIndex] = person;
 
-    this.setState({ persons });
+    this.setState((prevState, props) => {
+      return {
+        persons, 
+        changeCounter: prevState.changeCounter + 1
+      }
+    });
   }
 
   togglePersonsHandler = () => {
@@ -86,7 +94,7 @@ class App extends Component {
     }
 
     return (
-        <div className={classes.App}>
+        <Aux>
           <button onClick={() => {this.setState({showHeader: false})}}>Turn off Header</button>
           { this.state.showHeader ? 
             <Header 
@@ -96,9 +104,9 @@ class App extends Component {
               clicked={this.togglePersonsHandler}
             /> : null }
           {persons}
-        </div>
+        </Aux>
     );
   };
 }
 
-export default App;
+export default withClass(App, classes.App);

@@ -1,18 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import classes from './Header.css'
 
 const header = (props) => {
+    const toggleButtonRef = useRef(null);
+
     useEffect(() => {
-      console.log('[Header.js useEffect]')
-
-      const timer = setTimeout(() => {
-        alert('saved data to cloud');
-      }, 1000);
-
-      return () => {
-      clearTimeout(timer);
-      console.log('[Header.js] clean up at work...')
-      }
+      toggleButtonRef.current.click();
     }, []);
 
     useEffect(() => {
@@ -43,11 +36,12 @@ const header = (props) => {
         <div className={classes.Header}>
             <h1 className={assignedClasses.join(' ')}>{props.title}</h1>
             <button
-            className={buttonClass.join(' ')}
-            alt={props.showPersons ? 0 : 1}
-            onClick={props.clicked}
+              ref={toggleButtonRef}
+              className={buttonClass.join(' ')}
+              alt={props.showPersons ? 0 : 1}
+              onClick={props.clicked}
             >
-            Toggle Persons
+              Toggle Persons
             </button>
         </div>
     )
